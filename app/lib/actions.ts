@@ -71,11 +71,14 @@ export const deleteInvoice = async (id: string) => {
   
   try{
     await sql`DELETE FROM invoices WHERE id = ${id}`;
+    revalidatePath('/dashboard/invoices');
+    return {
+      message: "Invoice deleted successfully"
+    }
   }catch(err){
     return {
       message: "An error occurred while deleting the invoice"
     }
   }
 
-  revalidatePath('/dashboard/invoices');
 }
